@@ -1,0 +1,223 @@
+//Error login
+function Login() {
+	var x = document.getElementById("txtUserID").value;
+	var y = document.getElementById("txtPassword").value;
+
+	if (x == "") {
+		document.getElementById("lblErrorMessage").innerHTML = "Error Message1";
+		return false;
+	} else if (y == "") {
+		document.getElementById("lblErrorMessage").innerHTML = "Error Message2";
+		return false;
+	}
+	document.getElementById("modeLogin").value = "Login";
+	document.getElementById('myFormLogin').submit();
+	return true;
+}
+
+// Logout
+function Logout() {
+	document.getElementById("modeLogin").value = "Logout";
+	document.getElementById('myFormLogout').submit();
+	return true;
+}
+// clear cac input o trang login
+function LoginClear() {
+	document.getElementById("lblErrorMessage").innerHTML = "";
+	document.getElementById("txtUserID").value = "";
+	document.getElementById("txtPassword").value = "";
+
+}
+// click addnew
+function Addnew() {
+	document.getElementById("modeSearch").value = "addnew";
+	document.getElementById('myFormSearch').submit();
+	return true;
+
+}
+// luan phien mau cua record
+function alternate(id) {
+	if (document.getElementsByTagName) {
+		var table = document.getElementById(id);
+		var rows = table.getElementsByTagName("tr");
+		for (i = 0; i < rows.length; i++) {
+			// manipulate rows
+			if (i % 2 == 0) {
+				rows[i].className = "even";
+			} else {
+				rows[i].className = "odd";
+			}
+		}
+	}
+}
+
+// click search
+function Search() {
+	var x = document.getElementById("txtsearchName").value;
+	var y = document.getElementById("llbSex").value;
+	var z1 = document.getElementById("txtBirthdayFrom").value;
+	var z2 = document.getElementById("txtBirthdayTo").value;
+	if (z1 != "" || z2 != "") {
+		if (isDate(z1) && isDate(z2)) {
+			// alert("OK");
+		} else {
+			alert("Invalid date format yyyy/MM/dd!");
+			return false;
+		}
+
+	}
+	document.getElementById("modeSearch").value = "search";
+	document.getElementById('myFormSearch').submit();
+	return true;
+
+}
+
+function pagingFirst() {
+	document.getElementById("modeSearch").value = "pagingFirst";
+	document.getElementById('myFormSearch').submit();
+	return true;
+
+}
+function pagingPrevious() {
+	document.getElementById("modeSearch").value = "pagingPrevious";
+	document.getElementById('myFormSearch').submit();
+	return true;
+
+}
+function pagingNext() {
+	document.getElementById("modeSearch").value = "pagingNext";
+	document.getElementById('myFormSearch').submit();
+	return true;
+
+}
+
+function pagingLast() {
+	document.getElementById("modeSearch").value = "pagingLast";
+	document.getElementById('myFormSearch').submit();
+	return true;
+
+}
+
+// xac thuc date
+function isDate(ExpiryDate) {
+	var objDate, mSeconds, day, month,year; 
+	// độ dài ngày phải là 10 ký tự (không ít hơn)
+	if (ExpiryDate.length !== 10) {
+		return false;
+	}
+	// ky tu thu 5 va thu 8 phai co '/'
+	if (ExpiryDate.substring(4, 5) !== '/'
+			|| ExpiryDate.substring(7, 8) !== '/') {
+		return false;
+	}
+	
+	//đưa ExpiryDate (định dạng mong đợi là yyyy/MM/dd)
+	// tháng từ vị trí 6 đến 7
+	month = ExpiryDate.substring(6, 7) - 1;
+	// ngày từ vị trí 9 đến 10
+	day = ExpiryDate.substring(9, 10) - 0; 
+	// năm bắt đầu từ vị trí 0 đến 4
+	year = ExpiryDate.substring(0, 4) - 0;
+	// phạm vi năm
+	if (year < 1000 || year > 3000) {
+		return false;
+	}
+	// chuyển đổi
+	mSeconds = (new Date(year, month, day)).getTime();
+	// khởi tạo Date ()
+	objDate = new Date();
+	objDate.setTime(mSeconds);
+	// so sánh ngày và phần đầu vào từ đối tượng Date ()
+	// nếu khác thì ngày đó không hợp lệ
+	if (objDate.getFullYear() !== year || objDate.getMonth() !== month
+			|| objDate.getDate() !== day) {
+		return false;
+	}
+	return true;
+}
+
+//hàm check all checkbox
+function toggle(source) {
+	var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	for ( var i = 0; i < checkboxes.length; i++) {
+		if (checkboxes[i] != source)
+			checkboxes[i].checked = source.checked;
+	}
+}
+
+// checkbox only
+function checkedFunction(arg) {
+	var x = document.getElementById("customerId");
+	if (arg.checked == true) {
+		x.value = x.value + ",";
+		x.value = x.value + arg.id;
+
+	}
+	if (arg.checked == false) {
+		x.value = x.value.replace("," + arg.id, "");
+		return false;
+
+	}
+}
+
+function ErrorDelete() {
+	document.getElementById("modeSearch").value = "delete";
+	document.getElementById('myFormSearch').submit();
+	return true;
+}
+// Bat loi chua checkbox
+// // function ErrorDelete() {
+// //
+// // var x1=document.getElementById("customerId").value;
+// // if (x1 == "") {
+// // alert("Not check box!");
+// // return false;
+// // }
+// // if (checkedFunction()) {
+// // return true;
+// // }
+// // document.getElementById("modeSearch").value = "delete";
+// // document.getElementById('myFormSearch').submit();
+// // return true;
+// // }
+
+// check input email,birthday,null
+function EditError() {
+	var a = document.getElementById("txtCustomer_name").value;
+	var b = document.getElementById("txtSex").value;
+	var e = document.getElementById("txtAddress").value;
+	var x = document.forms["myFormEdit"]["txtEmail"].value;
+	var z = document.getElementById("txtBirthday").value;
+	var atpos = x.indexOf("@");
+	var dotpos = x.lastIndexOf(".");
+	if (a == "" || b == "" || e == "") {
+		document.getElementById("lblErrorMessage").innerHTML = "Error Message";
+		return false;
+	}
+	if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length) {
+		alert("Not a valid e-mail address");
+		return false;
+	}
+	if (z != "") {
+		if (isDate(z)) {
+			// alert("OK");
+		} else {
+			alert("Error birthday yyyy/MM/dd");
+			return false;
+		}
+	}
+	document.getElementById("modeEdit").value = "save";
+	document.getElementById('myFormEdit').submit();
+	return true;
+}
+// clear input
+function EditClear() {
+	document.getElementById("lblErrorMessage").innerHTML = "";
+	document.getElementById("txtCustomer_Id").value = "";
+	document.getElementById("txtCustomer_name").value = "";
+	document.getElementById("txtSex").value = "";
+	document.getElementById("txtBirthday").value = "";
+	document.getElementById("txtEmail").value = "";
+	document.getElementById("txtAddress").value = "";
+
+}
