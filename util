@@ -1,0 +1,87 @@
+package fjs.cs.common;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Utils {
+
+	public static String nullToBlank(Object c) {
+		if (null == c) {
+			return "";
+		}
+		return c.toString();
+	}
+//	public static String nullToValue0(Object a) {
+//		if (null == a) {
+//			a=0;
+//		}
+//		return a.toString();
+//	
+//	}
+//	public static String nullToValue1(Object c) {
+//		if (null == c ) {
+//			c=1;
+//		}
+//		return c.toString();
+//	
+//	}
+
+	public static Date convertDate(java.util.Date date) {
+		if (date != null) {
+			return new Date(date.getYear(), date.getMonth(), date.getDate());
+		} else
+			return null;
+
+	}
+//chuyen tu ngay sang chuoi nhu dinh dang
+	public static String dateToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		return sdf.format(date);
+	}
+
+	public static Date stringToDate(String s) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				return (Date) sdf.parse(s);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			return new Date();
+	}
+	
+	public static Date stringToDate2(String s) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			return (Date) sdf.parse(s);
+		} catch (Exception e) {
+			return new Date();
+		}
+	}
+
+	public static void main(String[] args) throws Exception {
+//		Date d = new Date();
+//		String s = "2018-09-04";
+//		System.out.println("Ham dateToString");
+//		System.out.println(dateToString(d));
+//		System.out.println("Ham stringToDate");
+//		System.out.println(stringToDate(s));
+		
+//		Date date= Utils.stringToDate(s);
+//		String date1=Utils.dateToString2(date);
+//		System.out.println(date1);
+		
+		
+		
+//		String sDate1 = "2018-09-04";
+//		Date ddate1 = new Date();
+//		System.out.println("tu chuoi " + sDate1 + " sang ngay: "
+//				+ stringToDate("2018-09-04"));
+//		// System.out.println(dateToString("b"+sDate1));
+//
+//		System.out.println("tu ngay " + ddate1 + " sang chuoi: "
+//				+ dateToString(ddate1));
+//		System.out.println(ddate1);
+//		System.out.println(dateTodateformat(ddate1));
+}
+}
