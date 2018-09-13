@@ -1,0 +1,67 @@
+package fjs.cs.action;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import fjs.cs.common.Constants;
+import fjs.cs.common.Utils;
+import fjs.cs.dao.MSTCUSTOMER;
+import fjs.cs.dao.MSTCUSTOMER_DAO;
+
+public class Edit extends HttpServlet {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		RequestDispatcher myRD = null;
+		// Hien thi man hinh Edit
+		myRD = req.getRequestDispatcher(Constants.T003_EDIT);
+		myRD.forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String mode = req.getParameter("modeEdit");
+		HttpSession session = req.getSession();
+		RequestDispatcher myRD = null;
+		MSTCUSTOMER_DAO dao=new MSTCUSTOMER_DAO();
+		
+		if (mode.equals("save")) {
+			MSTCUSTOMER mstcustomer = new MSTCUSTOMER() {
+			};
+			String customerName = req.getParameter("txtCustomer_name");
+			String sex = req.getParameter("txtSex");
+			String address = req.getParameter("txtAddress");
+			String email = req.getParameter("txtEmail");
+			String birthday = req.getParameter("txtBirthday");
+			// lỗi
+			Date date=new Date(0, 0, 0);
+			mstcustomer.setCustomer_Name(customerName);
+			mstcustomer.setSex(sex);
+			mstcustomer.setAddress(address); 
+			mstcustomer.setBirthday(birthday);
+			mstcustomer.setBirthday(email);
+			mstcustomer.setInsert_YMD((java.sql.Date) date);
+			mstcustomer.setUpdate_YMD((java.sql.Date) date);
+			if (dao.AddNew(mstcustomer)) {
+				resp.sendRedirect("Search");
+				return;
+//				myRD = req.getRequestDispatcher(Constants.T002_SEARCH);
+//				myRD.forward(req, resp);
+			}
+		}
+
+	}
+
+}
